@@ -131,24 +131,24 @@ public class FullscreenActivity extends AppCompatActivity {
 
 //        System.setProperty("mx.sysinfo", "linux_64");
 
-            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-            init();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        init();
         Log.i("ORIGAMI", Core.VERSION);
 
         ExecutorService myExecutor = Executors.newCachedThreadPool();
         myExecutor.execute(new Runnable() {
             @Override
             public void run() {
-            //Mat image = grabOne();
+                //Mat image = grabOne();
                 Mat image = null;
                 try {
-                     image = Origami.urlToMat("https://raw.githubusercontent.com/hellonico/origami/master/doc/cat_in_bowl.jpeg");
+                    image = Origami.urlToMat(getString(R.string.image_url));
                     Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2RGBA);
                     image = new Canny().apply(image);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                final Bitmap resultBitmap = Bitmap.createBitmap(image.cols(),  image.rows(),Bitmap.Config.ARGB_8888);
+                final Bitmap resultBitmap = Bitmap.createBitmap(image.cols(), image.rows(), Bitmap.Config.ARGB_8888);
 
                 Utils.matToBitmap(image, resultBitmap);
                 // https://stackoverflow.com/questions/5161951/android-only-the-original-thread-that-created-a-view-hierarchy-can-touch-its-vi
@@ -165,7 +165,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     protected void updateImage(Bitmap bitmap) {
-        final ImageView banner = (ImageView)findViewById(R.id.imageView);
+        final ImageView banner = (ImageView) findViewById(R.id.imageView);
         banner.setImageBitmap(bitmap);
     }
 
