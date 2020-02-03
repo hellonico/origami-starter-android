@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import origami.Origami;
+import origami.filters.Canny;
 
 
 import static origami.Origami.*;
@@ -143,6 +144,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 try {
                      image = Origami.urlToMat("https://raw.githubusercontent.com/hellonico/origami/master/doc/cat_in_bowl.jpeg");
                     Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2RGBA);
+                    image = new Canny().apply(image);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
